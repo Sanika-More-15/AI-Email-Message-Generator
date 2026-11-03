@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<head>
+    <title>AI Email $ Message Generator</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container{
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        h2{
+            text-align: center;
+            color: #4f46e5;
+        }
+
+        label{
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select, textarea{
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            box-sizing: border-box;
+        }
+
+        textarea{
+            height: 120px;
+        }
+
+        button{
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover{
+            background-color: #3730a3;
+        }
+
+        .result{
+            background: #eee;
+            padding: 15px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        
+        <h2>AI Email & Message Generator</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label>Message Type</label>
+            <select name="message_type">
+                <option>Job Application Email</option>
+                <option>Professional Email</option>
+                <option>LinkedIn Message</option>
+                <option>WhatsApp Message</option>
+            </select>
+
+            <label>Select Tone</label>
+            <select name="tone">
+                <option>Professional</option>
+                <option>Formal</option>
+                <option>Friendly</option>
+            </select>
+
+            <label>Enter Your Message</label>
+            <textarea name="user_input" 
+            placeholder="Enter your message here..."
+            required></textarea>
+
+            <label>Select Action</label>
+            <select name="action">
+                <option>Generate</option>
+                <option>Rewrite</option>
+                <option>Shorten</option>
+                <option>Expand</option>
+            </select>
+
+            <button type="submit">Generate with AI</button>
+        </form>
+
+        {% if result %}
+            <h3>Generated Result:</h3>
+            <div class="result" id="result">{{ result }}</div>
+
+            <button type="button" onclick="copyResult()">Copy Result</button>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyResult() {
+            let text=document.getElementById("result").innerText;
+            navigator.clipboard.writeText(text);
+            alert("Result copied Successfully!");
+        }
+    </script>
+
+</body>
